@@ -17,7 +17,7 @@ public class SystemCars {
 	
 	public static int carsCount = 0;
 	
-	int payment = 0;
+	static int payment = 0;
 	
 	public static ArrayList<String> getCars() {
 		return cars;
@@ -46,7 +46,7 @@ public class SystemCars {
 		//log offers removed
 	}
 	
-	public int calculatePayment(int value) {
+	public static int calculatePayment(int value) {
 		payment = value / 24;
 		return payment;
 	}
