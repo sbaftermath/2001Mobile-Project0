@@ -1,11 +1,12 @@
 package com.revature.util;
 
 import org.apache.log4j.Logger;
-import org.apache.log4j.BasicConfigurator;
+
+import com.revature.driver.LoginDriver;
 
 public class LoggerUtil {
 	
-	private static Logger log = Logger.getRootLogger();
+	private static Logger log = Logger.getLogger(LoginDriver.class);
 	
 	public static void fatal(String m) {
 		log.fatal(m);

@@ -52,7 +52,7 @@ public class EmployeeLoginService extends UserLoginService{
 
 	public void addCar(String string) {
 		SystemCars.addCars(string);
-		// log car is added
+		log.info(string + " has been added to lot");
 	}
 	
 	public void removeCar(String string) {
@@ -60,7 +60,7 @@ public class EmployeeLoginService extends UserLoginService{
 			ArrayList<String> cars = SystemCars.getCars();
 			if (cars.contains(string)) {
 				cars.remove(string);
-				//log car is removed
+				log.info(string + " has been removed from lot");
 			}
 		}
 	}
@@ -88,6 +88,7 @@ public class EmployeeLoginService extends UserLoginService{
 					System.out.println(acceptedOffer);
 					//System.out.println(acceptedOffer.get(string));
 					//need to add to customer car list
+					log.info("offer has been accepted");
 					log.info("car added to owned list");
 					SC.rejectAll(string);
 				}

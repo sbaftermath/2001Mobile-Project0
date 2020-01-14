@@ -1,8 +1,10 @@
 package com.revature.driver;
 
+import java.util.Properties;
 import java.util.Scanner;
 
 import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.PropertyConfigurator;
 
 import com.revature.pojo.User;
 import com.revature.service.CustomerLoginService;
@@ -27,9 +29,10 @@ public class LoginDriver {
 	public static void main(String[] args) {
 
 		String option = "";
-		BasicConfigurator.configure();
-
+		//PropertyConfigurator.configure("C:\\Revature\\Repo\\Project0\\2001Mobile-Project0\\Project0-kjayshieu\\src\\main\\resources\\log4j.properties");
+		
 		do {
+			System.out.println("");
 			System.out.println("What would you like to do?");
 			System.out.println("[1] Register User");
 			System.out.println("[2] Login");
@@ -80,7 +83,7 @@ public class LoginDriver {
 			els = new EmployeeLoginService();
 			System.out.println("You are now an Employee");
 			access = 2;
-			log.info("Employeee logged in");
+			log.info("Employee logged in");
 			break;
 		case "6":
 			if (access > 0) {

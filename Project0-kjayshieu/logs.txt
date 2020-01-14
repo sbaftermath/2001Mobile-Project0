@@ -1,0 +1,4 @@
+2020-01-14 16:05:46 INFO  LoginDriver:24-Employeee logged in
+2020-01-14 16:06:57 INFO  LoginDriver:24-Employeee logged in
+2020-01-14 16:06:59 INFO  LoginDriver:24-car has been added
+2020-01-14 16:06:59 INFO  LoginDriver:24-car added to lot
