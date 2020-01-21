@@ -4,8 +4,11 @@ import java.io.Serializable;
 
 public class Payment implements Serializable {
 
-	public int payment;
-	public int monthlyPayment;
+	private int payment;
+	
+	private int car_id;
+	
+	private int user_id;
 
 	public int getPayment() {
 		return payment;
@@ -14,18 +17,37 @@ public class Payment implements Serializable {
 	public void setPayment(int payment) {
 		this.payment = payment;
 	}
-	
-	public int getMonthlyPayment() {
-		return monthlyPayment;
+
+	public int getCar_id() {
+		return car_id;
 	}
 
-	public void setMonthlyPayment(int monthlyPayment) {
-		this.monthlyPayment = monthlyPayment;
+	public void setCar_id(int car_id) {
+		this.car_id = car_id;
 	}
 
-	public void calculateMonthlyPayment() {
-		this.setMonthlyPayment(this.getPayment() / 24);
+	public int getUser_id() {
+		return user_id;
+	}
+
+	public void setUser_id(int user_id) {
+		this.user_id = user_id;
 	}
 	
+	
+
+	public Payment(int payment, int car_id, int user_id) {
+		super();
+		this.payment = payment;
+		this.car_id = car_id;
+		this.user_id = user_id;
+	}
+
+	@Override
+	public String toString() {
+		return "Payment [payment=" + payment + ", car_id=" + car_id + ", user_id=" + user_id + "]";
+	}
+
+
 	
 }

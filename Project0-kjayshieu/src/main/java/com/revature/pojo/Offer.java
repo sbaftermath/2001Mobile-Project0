@@ -1,38 +1,47 @@
 package com.revature.pojo;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
-public class Offer implements Serializable {
+public class Offer {
 	
-	public HashMap<String, List<Integer>> offer = new HashMap<String, List<Integer>>();
-	public List<Integer> custOffer = new ArrayList<Integer>();
-	public int amount;
-	public String iD;
+	private int amount;
+	
+	private int carID;
+	
+	private int userID;
 	
 	public int getAmount() {
 		return amount;
 	}
-	
+
 	public void setAmount(int amount) {
 		this.amount = amount;
 	}
-	
-	public String getID() {
-		return iD;
-	}
-	
-	public void setID(String iD) {
-		this.iD = iD;
-	}
-	
-	public HashMap<String, List<Integer>> createOffer() {
-		custOffer.add(amount);
-		offer.put(iD, custOffer);
-		return offer;
+
+	public int getCarID() {
+		return carID;
 	}
 
+	public void setCarID(int carID) {
+		this.carID = carID;
+	}
+
+	public int getUserID() {
+		return userID;
+	}
+
+	public void setUserID(int userID) {
+		this.userID = userID;
+	}
 	
+	@Override
+	public String toString() {
+		return "Offer [amount=" + amount + ", carID=" + carID + ", userID=" + userID + "]";
+	}
+
+	public Offer(int amount, int carID, int userID) {
+		super();
+		this.amount = amount;
+		this.carID = carID;
+		this.userID = userID;
+	}
+
 }

@@ -1,20 +1,18 @@
 package com.revature.pojo;
 
-import java.io.Serializable;
-
-import com.revature.dao.carDAOSerialization;
-
-public class Car implements Serializable {
+public class Car{
 
 	public String car;
-	public String make;
-	public String iD;
+	public int userID;
+	public int carID;
+	//public String model;
+	//public String make;
 	
-	public String getCar() {
-		return car;
+	/*public String getModel() {
+		return model;
 	}
-	public void setCar(String car) {
-		this.car = car;
+	public void setModel(String car) {
+		this.model = model;
 	}
 	public String getMake() {
 		return make;
@@ -22,32 +20,44 @@ public class Car implements Serializable {
 	public void setMake(String make) {
 		this.make = make;
 	}
-	public String get() {
-		return iD;
+*/
+	
+	public void setCar(String car) {
+		this.car = car;
 	}
-	public void set(String iD) {
-		 this.iD = iD;
+	
+	public int getUserID() {
+		return userID;
 	}
 
-	public void createCar(Car car) {
-		carDAOSerialization CDS = new carDAOSerialization();
-		CDS.createCar(car);
+	public void setUserID(int userID) {
+		this.userID = userID;
 	}
-	
-	public void getCars() {
-		carDAOSerialization CDS = new carDAOSerialization();
-		CDS.readCar(car);
+
+	public int getCarID() {
+		return carID;
 	}
-	@Override
-	public String toString() {
-		return "Car [car=" + car + ", make=" + make + ", iD=" + iD + "]";
+
+	public void setCarID(int carID) {
+		this.carID = carID;
 	}
-	public Car(String car, String make, String iD) {
+
+	public String getCars() {
+		return car;
+	}
+
+
+	public Car(String car, int userID, int carID) {
 		super();
 		this.car = car;
-		this.make = make;
-		this.iD = iD;
+		this.userID = userID;
+		this.carID = carID;
 	}
-	
+
+	@Override
+	public String toString() {
+		return "Car [car=" + car + ", userID=" + userID + ", carID=" + carID + "]";
+	}
+
 	
 }

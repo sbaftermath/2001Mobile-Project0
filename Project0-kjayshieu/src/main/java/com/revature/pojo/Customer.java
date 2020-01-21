@@ -1,41 +1,33 @@
 package com.revature.pojo;
 
-import java.io.Serializable;
-
-import com.revature.interfaces.User;
-
-public class Customer implements User, Serializable{
+public class Customer{
 	
-	public String username;
-	public String password;
+	public static String username;
+	public static String password;
 	
-	public String getUsername() {
+	public static String getUsername() {
 		return username;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	public static void setUsername(String newUsername) {
+		username = newUsername;
 	}
 
-	public String getPassword() {
+	public static String getPassword() {
 		return password;
 	}
 
-	public void setPassword(String password) {
-		this.password = password;
+	public static void setPassword(String newPassword) {
+		password = newPassword;
 	}
 
-	@Override
 	public void login(String username, String password) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	public void addOffer(int value, String car){
-		Offer offer = new Offer();
-		offer.setAmount(value);
-		offer.setID(car);
-		offer.createOffer();
+
 	}
 	
 	public void viewPayment() {

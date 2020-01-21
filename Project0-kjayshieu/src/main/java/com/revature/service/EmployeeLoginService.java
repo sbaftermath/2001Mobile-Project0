@@ -1,118 +1,132 @@
 package com.revature.service;
 
-import com.revature.pojo.User;
+
+import com.revature.dao.OfferDAOPostgres;
+import com.revature.dao.PaymentDAOPostgres;
+import com.revature.dao.carDAOPostgres;
+import com.revature.pojo.Car;
+import com.revature.pojo.Payment;
 import com.revature.util.LoggerUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Scanner;
 
-import com.revature.pojo.SystemCars;
 
-public class EmployeeLoginService extends UserLoginService{
+public class EmployeeLoginService{
 	
 	private static LoggerUtil log = new LoggerUtil();
 	
-	public String[] cars = new String[10];
+	private static Scanner scan = new Scanner(System.in);
 	
-	public int numberOfCars = 0;
+	public static carDAOPostgres cdp = new carDAOPostgres();
 	
-	public static boolean accept = false;
+	public static PaymentDAOPostgres pdp = new PaymentDAOPostgres();
 	
-	public static Map<String, Integer> acceptedOffer = new HashMap<String, Integer>();
+	public static OfferDAOPostgres odp = new OfferDAOPostgres();
 	
-	public SystemCars SC = new SystemCars();
+	static String car = "";
 	
-	public static Map<String, List<Integer>> Offers = new HashMap<String, List<Integer>>();
+	static int offer;
 	
-	@Override
-	public boolean authenticateUser(User user) {
-		return true;
-	}
-	
-	@Override 
-	public boolean authenticateUserAsEmployee(User user) {
-		return true;
-	}
-	
-	
-	
-	public Map<String, Integer> getAcceptedOffer() {
-		return acceptedOffer;
-	}
-
-
-
-	public void setAcceptedOffer(Map<String, Integer> acceptedOffer) {
-		this.acceptedOffer = acceptedOffer;
-	}
-
-
-
-	public void addCar(String string) {
-		SystemCars.addCars(string);
-		log.info(string + " has been added to lot");
-	}
-	
-	public void removeCar(String string) {
-		for (int i = 0; i < cars.length; i ++) {
-			ArrayList<String> cars = SystemCars.getCars();
-			if (cars.contains(string)) {
-				cars.remove(string);
-				log.info(string + " has been removed from lot");
-			}
-		}
-	}
-	
-	public Map<String, List<Integer>> viewOffers(String string) {
-		Map<String, List<Integer>> Offers = CustomerLoginService.getCarOffers();
-		return Offers;
-	}
-	
-	public void acceptOffer(String string, int value) {
-		List<Integer> values = new ArrayList<Integer>();
-		//Map<String, List<Integer>> Offers = CustomerLoginService.getCarOffers();
-		Offers.putAll(CustomerLoginService.getCarOffers());
-
-		//System.out.println(Offers.containsKey(string));
-		//System.out.println(Offers.get(string));
+	public static void start() {
+		String option = "";
 		
-		if (Offers.containsKey(string) == true) {
-			values = Offers.get(string);
-			for (int i = 0; i < values.size(); i++) {
-				if (values.get(i) == value) {
-					Map<String, Integer> acceptoffer = new HashMap<String, Integer>();
-					acceptoffer.put(string, value);
-					setAcceptedOffer(acceptoffer);
-					System.out.println(acceptedOffer);
-					//System.out.println(acceptedOffer.get(string));
-					//need to add to customer car list
-					log.info("offer has been accepted");
-					log.info("car added to owned list");
-					SC.rejectAll(string);
-				}
-				else {
-					System.out.println("Offer invalid");
-				}
-			}
-		}
-		else {
-			System.out.println("Wrong car");
+		do {
+			
+			System.out.println("");
+			System.out.println("What would you like to do?");
+			System.out.println("[0] Log out");
+			System.out.println("[1] Add cars");
+			System.out.println("[2] Remove car");
+			System.out.println("[3] Accept offer");
+			System.out.println("[4] Reject offer");
+			System.out.println("[5] View all payments");
+			System.out.println("[6] View cars");
+			System.out.println("[7] View offers");
+			System.out.println("");
+			
+			option = scan.nextLine();
+			
+			preformUserAction(option);
+			
+			
+		}while(!"0".equals(option));
+		
+	}
+	
+	public static void preformUserAction(String option) {
+		switch(option) {
+		case "0":
+			System.out.println("logged out");
+			LoginService.Start();
+			break;
+		case "1":
+			System.out.println("Car: ");
+			car = scan.nextLine();
+			addCar(car);
+			break;
+		case "2":
+			System.out.println("Car: ");
+			car = scan.nextLine();
+			removeCar(car);
+			break;
+		case "3":
+			System.out.println("Car: ");
+			car = scan.nextLine();
+			System.out.println("Offer: ");
+			offer = Integer.parseInt(scan.nextLine());
+			acceptOffer(car, offer);
+			break;
+		case "4":
+			System.out.println("Car: ");
+			car = scan.nextLine();
+			System.out.println("Offer: ");
+			offer = Integer.parseInt(scan.nextLine());
+			rejectOffer(car, offer);
+			break;
+		case "5":
+			viewAllPayments();
+			break;
+		case "6":
+			viewCars();
+			break;
+		case "7":
+			viewAllPayments();
+			break;
 		}
 	}
 	
-	public void rejectOffer(String string, int value) {
-		Map<String, List<Integer>> Offers = CustomerLoginService.viewOffers();
-		Offers.remove(string,value);
-		log.info("Offer of: " + value + "removed from car:" + string);
+	public static void addCar(String car) {
+		cdp.createCar(car);
+		log.info("added car to Lot");
 	}
 	
-	public void viewPayments() {
-		Map<String, Integer> offered = new HashMap<String, Integer>();
-		int offer = 0;
-		offered.putAll(getAcceptedOffer());
-		System.out.println(offered.values());
+	public static void removeCar(String car) {
+		cdp.removeCar(car);
+		log.info("removed car from Lot");
+	}
+	
+	public static void viewAllPayments() {
+		List<Payment> Payments = pdp.viewAllPayments();
+		System.out.println(Payments);
+	}
+	
+	public static void acceptOffer(String car, int amount) {
+		odp.acceptOffer(car, amount);
+		log.info("Accepted offer");
+	}
+	
+	public static void rejectOffer(String car, int amount) {
+		odp.rejectOffer(car, amount);
+		log.info("Rejected offer");
+	}
+	
+	public static void viewCars(){
+		List<Car> carList = cdp.viewCars();
+		System.out.println(carList);
 	}
 
 }

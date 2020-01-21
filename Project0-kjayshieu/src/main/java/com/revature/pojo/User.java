@@ -1,13 +1,31 @@
 package com.revature.pojo;
 
-import java.io.Serializable;
+public class User{
 
-public class User implements Serializable {
-
+	private int id;
+	
 	private String username;
 	
 	private String password;
 	
+	private boolean isEmployee;
+	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public boolean isEmployee() {
+		return isEmployee;
+	}
+
+	public void setEmployee(boolean isEmployee) {
+		this.isEmployee = isEmployee;
+	}
+
 	public String getUsername() {
 		return this.username;
 	}
@@ -23,5 +41,21 @@ public class User implements Serializable {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+
+
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", username=" + username + ", password=" + password + ", isEmployee=" + isEmployee
+				+ "]";
+	}
+
+	public User(int id, String username, String password, boolean isEmployee) {
+		super();
+		this.id = id;
+		this.username = username;
+		this.password = password;
+		this.isEmployee = isEmployee;
+	}
+
 
 }

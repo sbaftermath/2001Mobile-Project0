@@ -1,43 +1,33 @@
 package com.revature.pojo;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
-import com.revature.interfaces.User;
-
-public class Employee implements User, Serializable{
+public class Employee {
 	
-	public static ArrayList<String> cars = new ArrayList<String>();
-	public static int carsCount = 0;
-	public String username;
-	public String password;
+	public static String username;
+	public static String password;
 	
 
-	@Override
-	public void setUsername(String username) {
+	public static void setUsername(String newUsername) {
 		// TODO Auto-generated method stub
-		this.username = username;
+		username = newUsername;
 	}
 
-	@Override
-	public String getUsername() {
+	public static String getUsername() {
 		// TODO Auto-generated method stub
 		return username;
 	}
 
-	@Override
-	public void setPassword(String password) {
+	public static void setPassword(String newPassword) {
 		// TODO Auto-generated method stub
-		this.password = password;
+		password = newPassword;
 	}
 
-	@Override
-	public String getPassword() {
+	public static String getPassword() {
 		// TODO Auto-generated method stub
 		return password;
 	}
 
-	@Override
 	public void login(String username, String password) {
 		// TODO Auto-generated method stub
 		
@@ -52,19 +42,11 @@ public class Employee implements User, Serializable{
 	}
 	
 	public void addCar(String car) {
-		cars.add(car);
-		carsCount ++;
-		//log car is added
+		
 	}
 	
 	public void removeCar(String string) {
-		for (int i = 0; i < cars.size(); i ++) {
-			ArrayList<String> cars = SystemCars.getCars();
-			if (cars.contains(string)) {
-				cars.remove(string);
-				//log car is removed
-			}
-		}
+
 	}
 	
 	public void viewPayments() {

@@ -1,10 +1,16 @@
 package com.revature.dao;
 
+import java.util.List;
+
 import com.revature.pojo.Car;
 
 public interface carDAO {
 
-	void createCar(Car car);
+	public void createCar(String car);
 	
-	Car readCar(String iD);
+	public void removeCar(String car);
+	
+	public List<Car> viewCars();
+	
+	public List<Car> viewOwnedCars(String username);
 }

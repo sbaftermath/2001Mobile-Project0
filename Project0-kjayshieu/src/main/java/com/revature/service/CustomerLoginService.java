@@ -1,87 +1,106 @@
 package com.revature.service;
 
-import com.revature.pojo.User;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Scanner;
 
-import com.revature.pojo.SystemCars;
+import com.revature.dao.OfferDAOPostgres;
+import com.revature.dao.PaymentDAOPostgres;
+import com.revature.dao.carDAOPostgres;
+import com.revature.pojo.Car;
+import com.revature.pojo.Customer;
+import com.revature.pojo.Payment;
+import com.revature.pojo.User;
 import com.revature.service.EmployeeLoginService;
 import com.revature.util.LoggerUtil;
 
-public class CustomerLoginService extends UserLoginService {
+public class CustomerLoginService {
 	
 	private static LoggerUtil log = new LoggerUtil();
 	
-	//private Map<String, List<Integer>> carOffers = new HashMap<String, List<Integer>>();
-	private static Map<String, List<Integer>> carOffers = new HashMap<String, List<Integer>>();
+	private static Scanner scan = new Scanner(System.in);
 	
-	public static List<Integer> offers = new ArrayList<Integer>();
+	static carDAOPostgres cdp = new carDAOPostgres();
 	
-	public boolean own = false;
+	static OfferDAOPostgres odp = new OfferDAOPostgres();
 	
-	public Map<String, Integer> Payment = new HashMap<String, Integer>();
+	static PaymentDAOPostgres pdp = new PaymentDAOPostgres();
 	
-	public EmployeeLoginService ELS = new EmployeeLoginService();
+	static String car;
 	
-	public SystemCars SC = new SystemCars();
-
-	@Override
-	public boolean authenticateUser(User user) {
-		return true;
+	static int offer;
+	
+	public static void start() {
+		
+		String option = "";
+		do {
+			
+			System.out.println("");
+			System.out.println("What would you like to do?");
+			System.out.println("[0] Log out");
+			System.out.println("[1] View cars");
+			System.out.println("[2] Add offer");
+			System.out.println("[3] View payments");
+			System.out.println("[4] View owned cars");
+			
+			option = scan.nextLine();
+			
+			preformUserAction(option);
+			
+			
+		}while(!"0".equals(option));
+		
 	}
 	
-	public void setCarOffers(Map<String, List<Integer>> carOffers) {
-		this.carOffers = carOffers;
-	}
-	
-	public static Map<String, List<Integer>> getCarOffers(){
-		return carOffers;
-	}
-	
-
-	public void makeOffer(String string, int value) {
-		offers.add(value);
-		Map<String, List<Integer>> cO = getCarOffers();
-		cO.put(string, offers);
-		setCarOffers(cO);
-		Map<String, List<Integer>> c1 = getCarOffers();
-		System.out.println(c1);
-		log.info("offer was made");
-	}
-	
-
-	public void viewCarLot() {
-		List<String> cars = SystemCars.getCars();
-		for (int i = 0; i < cars.size(); i++) {
-			System.out.println(cars.get(i));
+	public static void preformUserAction(String option) {
+		switch(option) {
+		case "0":
+			System.out.println("logged out");
+			LoginService.Start();
+			break;
+		case "1":
+			viewCars();
+			break;
+		case "2":
+			System.out.println("Car: ");
+			car = scan.nextLine();
+			System.out.println("Offer: ");
+			offer = Integer.parseInt(scan.nextLine());
+			addOffer(car, offer);
+			break;
+		case "3":
+			viewPayments();
+			break;
+		case "4":
+			viewOwnedCars();
+			break;
 		}
 	}
 
-	public void viewMyCars() {
-		Map<String, Integer> myCar = new HashMap<String, Integer>();
-		myCar.putAll(ELS.getAcceptedOffer());
-		System.out.println(myCar.keySet());
+	public static void viewCars() {
+		List<Car> cars = new ArrayList<>();
+		cars = cdp.viewCars();
+		System.out.println(cars);
 	}
-
-	public void viewPayment(String string) {
-		Map<String, Integer> offered = new HashMap<String, Integer>();
-		int offer = 0;
-		offered.putAll(ELS.getAcceptedOffer());
-		System.out.println(offered);
-		if (ELS.getAcceptedOffer().containsKey(string) == true) {
-			offer = ELS.getAcceptedOffer().get(string);
-			System.out.println("24 Payments of:" + SC.calculatePayment(offer));
-		}
-		else {
-			System.out.println("You do not own this car");
-		}
+	
+	public static void viewOwnedCars() {
+		String username = Customer.getUsername();
+		List<Car> carList = cdp.viewOwnedCars(username);
+		System.out.println(carList);
 	}
-
-	public static Map<String, List<Integer>> viewOffers() {
-		return carOffers;
+	
+	public static void addOffer(String car, int offer) {
+		odp.addOffer(car, offer);
+		log.info("Added offer");
 	}
+	
+	public static void viewPayments() {
+		List<Payment> payments = new ArrayList<>();
+		payments = pdp.viewPayment();
+		System.out.println(payments);
+	}
+	
 
 }
